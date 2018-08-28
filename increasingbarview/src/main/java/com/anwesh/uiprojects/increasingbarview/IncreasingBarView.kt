@@ -27,7 +27,10 @@ fun Canvas.drawIBNode(i : Int, scale : Float, paint : Paint) {
     save()
     translate(w / 2, gap * i)
     drawLine(0f, 0f, 0f, gap * scale, paint)
+    save()
+    translate(0f, gap / 2)
     drawRect(RectF(0f,-hRect/2, gap * sc, hRect/2), paint)
+    restore()
     restore()
 }
 
