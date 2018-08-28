@@ -159,4 +159,25 @@ class IncreasingBarView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : IncreasingBarView) {
+        private val animator : Animator = Animator(view)
+        private val increasingBar : LinkedIncreasingBar = LinkedIncreasingBar(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#BDBDBD"))
+            increasingBar.draw(canvas, paint)
+            animator.animate {
+                increasingBar.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            increasingBar.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
