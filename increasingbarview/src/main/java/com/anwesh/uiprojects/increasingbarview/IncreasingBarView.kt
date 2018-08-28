@@ -4,6 +4,7 @@ package com.anwesh.uiprojects.increasingbarview
  * Created by anweshmishra on 28/08/18.
  */
 
+import android.app.Activity
 import android.view.View
 import android.view.MotionEvent
 import android.content.Context
@@ -178,6 +179,14 @@ class IncreasingBarView(ctx : Context) : View(ctx) {
             increasingBar.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+        fun create(activity : Activity) : IncreasingBarView {
+            val view : IncreasingBarView = IncreasingBarView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
