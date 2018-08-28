@@ -93,4 +93,47 @@ class IncreasingBarView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class IBNode(var i : Int, val state : State = State()) {
+        var next : IBNode? = null
+        var prev : IBNode? = null
+
+        init {
+            addNeighbor()
+        }
+
+        fun addNeighbor() {
+            if (i < nodes - 1) {
+                next = IBNode(i + 1)
+                next?.prev = this
+            }
+        }
+
+        fun update(cb : (Int, Float) -> Unit) {
+            state.update {
+                cb(i, it)
+            }
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            state.startUpdating(cb)
+        }
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            canvas.drawIBNode(i, state.scale, paint)
+            prev?.draw(canvas, paint)
+        }
+
+        fun getNext(dir : Int, cb : () -> Unit) : IBNode {
+            var curr : IBNode? = this.prev
+            if (dir == 1) {
+                curr = next
+            }
+            if (curr != null) {
+                return curr
+            }
+            cb()
+            return this
+        }
+    }
 }
