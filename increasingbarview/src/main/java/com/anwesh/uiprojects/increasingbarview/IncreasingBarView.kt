@@ -24,12 +24,13 @@ fun Canvas.drawIBNode(i : Int, scale : Float, paint : Paint) {
     val gap : Float = h / nodes
     val hRect : Float = gap / 4
     val sc : Float = Math.min(0.5f, Math.max(0f, scale - 0.5f)) * 2
+    val factor : Float = 1f - 2 * (i % 2)
     save()
     translate(w / 2, gap * i)
     drawLine(0f, 0f, 0f, gap * scale, paint)
     save()
     translate(0f, gap / 2)
-    drawRect(RectF(0f,-hRect/2, gap * sc, hRect/2), paint)
+    drawRect(RectF(-(gap * sc) * (i %2),-hRect/2, gap * sc * (1 - i%2), hRect/2), paint)
     restore()
     restore()
 }
